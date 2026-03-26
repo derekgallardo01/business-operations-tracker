@@ -12,9 +12,9 @@ A full-stack work order management system for tracking business operations, buil
 |-----------|-------------|--------------|
 | ![Dashboard](docs/screenshots/dashboard.png) | ![Work Orders](docs/screenshots/work-orders.png) | ![Detail](docs/screenshots/work-order-detail.png) |
 
-| Employees | Dark Mode |
-|-----------|-----------|
-| ![Employees](docs/screenshots/employees.png) | ![Dark Mode](docs/screenshots/dark-mode.png) |
+| Employees | New Work Order | Dark Mode |
+|-----------|---------------|-----------|
+| ![Employees](docs/screenshots/employees.png) | ![New Order](docs/screenshots/new-work-order.png) | ![Dark Mode](docs/screenshots/dark-mode.png) |
 
 ## Features
 
