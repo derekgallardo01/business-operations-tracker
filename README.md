@@ -16,6 +16,10 @@ A full-stack work order management system for tracking business operations, buil
 |-----------|---------------|-----------|
 | ![Employees](docs/screenshots/employees.png) | ![New Order](docs/screenshots/new-work-order.png) | ![Dark Mode](docs/screenshots/dark-mode.png) |
 
+| Comments | Activity Log |
+|----------|-------------|
+| ![Comments](docs/screenshots/work-order-comments.png) | ![Activity](docs/screenshots/work-order-activity.png) |
+
 ## Features
 
 - **Dashboard** — real-time metrics, status distribution chart, team workload visualization
