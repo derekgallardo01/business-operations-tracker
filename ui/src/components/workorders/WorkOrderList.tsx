@@ -6,6 +6,7 @@ import { EmptyState } from '../common/EmptyState';
 import { CreateWorkOrderModal } from './CreateWorkOrderModal';
 import { WorkOrderDetail } from './WorkOrderDetail';
 import { useToast } from '../common/Toast';
+import { useWorkOrderSignalR } from '../../useWorkOrderSignalR';
 
 type SortField = 'workOrderID' | 'title' | 'priority' | 'status' | 'dueDate' | 'createdDate';
 type SortDir = 'asc' | 'desc';
@@ -65,6 +66,7 @@ export function WorkOrderList() {
 
   useEffect(() => { load(); }, [load]);
   useEffect(() => { api.getCategories().then(setCategories); }, []);
+  useWorkOrderSignalR(load);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {

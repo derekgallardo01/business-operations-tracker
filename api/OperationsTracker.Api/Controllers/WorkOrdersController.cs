@@ -1,6 +1,8 @@
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Data.SqlClient;
+using OperationsTracker.Api.Hubs;
 using OperationsTracker.Api.Models;
 
 namespace OperationsTracker.Api.Controllers;
@@ -10,10 +12,12 @@ namespace OperationsTracker.Api.Controllers;
 public class WorkOrdersController : ControllerBase
 {
     private readonly string _connectionString;
+    private readonly IHubContext<WorkOrderHub> _hub;
 
-    public WorkOrdersController(IConfiguration configuration)
+    public WorkOrdersController(IConfiguration configuration, IHubContext<WorkOrderHub> hub)
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection")!;
+        _hub = hub;
     }
 
     [HttpGet]
@@ -60,6 +64,7 @@ public class WorkOrdersController : ControllerBase
                 request.EstimatedHours
             },
             commandType: System.Data.CommandType.StoredProcedure);
+        await _hub.Clients.All.SendAsync("WorkOrderChanged");
         return CreatedAtAction(nameof(GetWorkOrder), new { id = result.WorkOrderID }, result);
     }
 
@@ -71,7 +76,9 @@ public class WorkOrdersController : ControllerBase
             "sp_UpdateWorkOrderStatus",
             new { WorkOrderID = id, request.NewStatus, request.ChangedByID, request.Notes },
             commandType: System.Data.CommandType.StoredProcedure);
-        return result is null ? NotFound() : Ok(result);
+        if (result is null) return NotFound();
+        await _hub.Clients.All.SendAsync("WorkOrderChanged");
+        return Ok(result);
     }
 
     [HttpPut("{id}/assign")]
@@ -82,7 +89,9 @@ public class WorkOrdersController : ControllerBase
             "sp_AssignWorkOrder",
             new { WorkOrderID = id, request.AssignedToID, request.ChangedByID },
             commandType: System.Data.CommandType.StoredProcedure);
-        return result is null ? NotFound() : Ok(result);
+        if (result is null) return NotFound();
+        await _hub.Clients.All.SendAsync("WorkOrderChanged");
+        return Ok(result);
     }
 
     [HttpPost("{id}/hours")]
@@ -93,7 +102,9 @@ public class WorkOrdersController : ControllerBase
             "sp_LogHours",
             new { WorkOrderID = id, request.Hours },
             commandType: System.Data.CommandType.StoredProcedure);
-        return result is null ? NotFound() : Ok(result);
+        if (result is null) return NotFound();
+        await _hub.Clients.All.SendAsync("WorkOrderChanged");
+        return Ok(result);
     }
 
     [HttpGet("{id}/comments")]
@@ -135,6 +146,7 @@ public class WorkOrdersController : ControllerBase
             "sp_AddComment",
             new { WorkOrderID = id, request.AuthorID, request.CommentText },
             commandType: System.Data.CommandType.StoredProcedure);
+        await _hub.Clients.All.SendAsync("WorkOrderChanged");
         return CreatedAtAction(nameof(GetComments), new { id }, result);
     }
 }

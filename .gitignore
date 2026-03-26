@@ -18,6 +18,12 @@ appsettings.Development.json
 .idea/
 .vscode/
 
+# Root tools
+/node_modules/
+/package.json
+/package-lock.json
+screenshot.js
+
 # OS
 Thumbs.db
 .DS_Store

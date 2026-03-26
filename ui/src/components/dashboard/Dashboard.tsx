@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { api, DashboardMetrics, TeamWorkload, WorkOrder } from '../../api';
 import { StatusBadge, PriorityBadge } from '../common/StatusBadge';
 import { LoadingSpinner } from '../common/LoadingSpinner';
+import { useWorkOrderSignalR } from '../../useWorkOrderSignalR';
 
 export function Dashboard({ onViewWorkOrder }: { onViewWorkOrder: (id: number) => void }) {
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
@@ -9,7 +10,7 @@ export function Dashboard({ onViewWorkOrder }: { onViewWorkOrder: (id: number) =
   const [recentOrders, setRecentOrders] = useState<WorkOrder[]>([]);
   const [error, setError] = useState('');
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     Promise.all([api.getDashboardMetrics(), api.getTeamWorkload(), api.getWorkOrders()])
       .then(([m, w, wo]) => {
         setMetrics(m);
@@ -18,6 +19,9 @@ export function Dashboard({ onViewWorkOrder }: { onViewWorkOrder: (id: number) =
       })
       .catch(e => setError(e.message));
   }, []);
+
+  useEffect(() => { loadData(); }, [loadData]);
+  useWorkOrderSignalR(loadData);
 
   if (error) return <div className="error-state">Failed to load dashboard: {error}</div>;
   if (!metrics) return <LoadingSpinner message="Loading dashboard..." />;

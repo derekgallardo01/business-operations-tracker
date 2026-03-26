@@ -2,7 +2,19 @@
 
 [![CI](https://github.com/derekgallardo01/business-operations-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/derekgallardo01/business-operations-tracker/actions/workflows/ci.yml)
 
-A full-stack work order management system for tracking business operations, built with .NET 8, React, and Azure SQL.
+A full-stack work order management system for tracking business operations, built with .NET 8, React, and Azure SQL. Features real-time updates via SignalR, dark mode, and a corporate sidebar layout.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+## Screenshots
+
+| Dashboard | Work Orders | Detail Panel |
+|-----------|-------------|--------------|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Work Orders](docs/screenshots/work-orders.png) | ![Detail](docs/screenshots/work-order-detail.png) |
+
+| Employees | Dark Mode |
+|-----------|-----------|
+| ![Employees](docs/screenshots/employees.png) | ![Dark Mode](docs/screenshots/dark-mode.png) |
 
 ## Features
 
@@ -15,14 +27,15 @@ A full-stack work order management system for tracking business operations, buil
 - **CSV Export** — export filtered work orders to CSV
 - **Print View** — print-friendly work order reports
 - **Dark Mode** — theme toggle with localStorage persistence
-- **Responsive** — mobile-friendly layout
+- **Real-Time Updates** — SignalR WebSocket pushes refresh all connected clients instantly
+- **Responsive** — mobile-friendly layout with collapsible sidebar
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
 | **Frontend** | React 18, TypeScript, CSS Variables |
-| **Backend** | .NET 8, ASP.NET Core, Dapper |
+| **Backend** | .NET 8, ASP.NET Core, Dapper, SignalR |
 | **Database** | Azure SQL / SQL Server |
 | **Auth** | Azure Managed Identity |
 | **CI/CD** | GitHub Actions |
