@@ -111,6 +111,22 @@ public class WorkOrdersController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id}/history")]
+    public async Task<IActionResult> GetStatusHistory(int id)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        var result = await connection.QueryAsync(
+            @"SELECT sh.StatusHistoryID, sh.WorkOrderID, sh.OldStatus, sh.NewStatus,
+                     sh.Notes, sh.ChangedDate,
+                     e.FirstName + ' ' + e.LastName AS ChangedByName
+              FROM StatusHistory sh
+              INNER JOIN Employees e ON sh.ChangedByID = e.EmployeeID
+              WHERE sh.WorkOrderID = @Id
+              ORDER BY sh.ChangedDate DESC",
+            new { Id = id });
+        return Ok(result);
+    }
+
     [HttpPost("{id}/comments")]
     public async Task<IActionResult> AddComment(int id, [FromBody] AddCommentRequest request)
     {

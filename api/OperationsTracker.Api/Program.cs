@@ -1,3 +1,5 @@
+using OperationsTracker.Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -11,6 +13,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -19,3 +23,5 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
