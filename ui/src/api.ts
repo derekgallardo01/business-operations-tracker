@@ -80,13 +80,13 @@ export interface Comment {
 }
 
 export interface StatusHistoryEntry {
-  statusHistoryID: number;
-  workOrderID: number;
-  oldStatus: string | null;
-  newStatus: string;
-  notes: string | null;
-  changedDate: string;
-  changedByName: string;
+  StatusHistoryID: number;
+  WorkOrderID: number;
+  OldStatus: string | null;
+  NewStatus: string;
+  Notes: string | null;
+  ChangedDate: string;
+  ChangedByName: string;
 }
 
 async function fetchJson<T>(url: string): Promise<T> {

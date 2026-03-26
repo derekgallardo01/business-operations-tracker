@@ -173,7 +173,7 @@ export function WorkOrderDetail({ workOrderId, onClose, onUpdated }: WorkOrderDe
         ${history.length > 0 ? `
           <div class="section">
             <div class="section-title">Activity Log</div>
-            ${history.map(h => `<div class="history-item"><strong>${h.changedByName}</strong> changed status ${h.oldStatus ? `from <em>${h.oldStatus}</em>` : ''} to <em>${h.newStatus}</em>${h.notes ? ` — ${h.notes}` : ''}<br><span class="date">${new Date(h.changedDate).toLocaleString()}</span></div>`).join('')}
+            ${history.map(h => `<div class="history-item"><strong>${h.ChangedByName}</strong> changed status ${h.OldStatus ? `from <em>${h.OldStatus}</em>` : ''} to <em>${h.NewStatus}</em>${h.Notes ? ` — ${h.Notes}` : ''}<br><span class="date">${new Date(h.ChangedDate).toLocaleString()}</span></div>`).join('')}
           </div>
         ` : ''}
         <div class="footer">Printed on ${new Date().toLocaleString()} | Operations Tracker</div>
@@ -377,21 +377,21 @@ export function WorkOrderDetail({ workOrderId, onClose, onUpdated }: WorkOrderDe
               ) : (
                 <div className="activity-timeline">
                   {history.map(h => (
-                    <div key={h.statusHistoryID} className="timeline-item">
+                    <div key={h.StatusHistoryID} className="timeline-item">
                       <div className="timeline-dot" />
                       <div className="timeline-content">
                         <div className="timeline-header">
-                          <strong>{h.changedByName}</strong>
-                          <span className="timeline-date">{new Date(h.changedDate).toLocaleString()}</span>
+                          <strong>{h.ChangedByName}</strong>
+                          <span className="timeline-date">{new Date(h.ChangedDate).toLocaleString()}</span>
                         </div>
                         <p>
                           Changed status{' '}
-                          {h.oldStatus && (
-                            <>from <StatusBadge status={h.oldStatus} /> </>
+                          {h.OldStatus && (
+                            <>from <StatusBadge status={h.OldStatus} /> </>
                           )}
-                          to <StatusBadge status={h.newStatus} />
+                          to <StatusBadge status={h.NewStatus} />
                         </p>
-                        {h.notes && <p className="timeline-notes">{h.notes}</p>}
+                        {h.Notes && <p className="timeline-notes">{h.Notes}</p>}
                       </div>
                     </div>
                   ))}
